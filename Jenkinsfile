@@ -18,7 +18,7 @@ pipeline {
       }
       post {
         always {
-          junit '**/target/surefire-reports/*.xml'
+          junit '**/target/cucumber-report/*.json'
         }
       }
     }
@@ -29,8 +29,8 @@ pipeline {
           sh """
             curl -H "Content-Type: multipart/form-data" \
                  -H "Authorization: Bearer $XRAY_TOKEN" \
-                 -F "file=@target/surefire-reports/TEST-com.example.MyTest.xml" \
-                 https://xray.cloud.getxray.app/api/v2/import/execution/junit
+                 --data @target/cucumber-report/cucumber.json \
+                 https://eu.xray.cloud.getxray.app/api/v2/import/execution/cucumber
           """
         }
       }
